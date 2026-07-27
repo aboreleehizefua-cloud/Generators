@@ -140,7 +140,6 @@ print(next(gen))
 gen.close()
 
 """
-"""
 #Real life cases
 def read_large_file (filepath):
     with open (filepath , "r") as f:
@@ -153,7 +152,7 @@ gen = read_large_file("C:\\Users\\HP\\OneDrive\\Documents\\log.txt")
 print(next(gen))
 print("...doing something else in between...")
 print(next(gen))
-"""
+
 #fill in the blank 
 def search_large_file(filepath , keyword):
     with open(filepath, "r") as f:
@@ -163,3 +162,15 @@ def search_large_file(filepath , keyword):
                 yield clean_line
 for line in search_large_file("C:\\Users\\HP\\OneDrive\\Documents\\log.txt", "need"):  
     print (line)            
+
+# --- CSV reader below ---
+def read_large_csv(filepath):
+    """Read a CSV file line by line without loading it all into memory"""
+    with open(filepath, 'r') as f:
+        header = next(f).strip().split(',')
+        for line in f:
+            values = line.strip().split(',')
+            yield dict(zip(header, values))
+
+for row in read_large_csv('C:\\Users\\HP\\OneDrive\\Documents\\huge_dataset.csv'):
+    print(row)
